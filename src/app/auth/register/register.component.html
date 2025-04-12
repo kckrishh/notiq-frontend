@@ -1,0 +1,133 @@
+<h1
+  class="font-poppins text-heading text-3xl text-center transition duration-200"
+>
+  Sign up
+</h1>
+
+<div *ngIf="success; else formTpl" class="text-center mt-8 px-6">
+  <lucide-icon
+    name="check-circle"
+    class="w-10 h-10 text-green-600 mx-auto mb-2"
+  ></lucide-icon>
+  <h2 class="text-xl font-poppins text-heading font-semibold mb-2">
+    Check your email!
+  </h2>
+  <p class="text-inter text-grayText text-sm">
+    {{
+      "We’ve sent you a verification link. Please check your inbox to complete the registration."
+    }}
+  </p>
+
+  <a
+    routerLink="/auth/login"
+    class="mt-6 inline-block px-6 py-2 bg-primary text-white font-poppins rounded-lg shadow-md hover:bg-hover transition-all duration-200"
+  >
+    Go to Login
+  </a>
+</div>
+
+<ng-template #formTpl>
+  <form
+    (ngSubmit)="onRegister(registerForm)"
+    #registerForm="ngForm"
+    class="flex flex-col gap-4 mt-6 text-inter transition duration-200"
+  >
+    <!-- Email -->
+    <div
+      class="flex items-center w-[20rem] mx-auto px-3 py-2 border border-border rounded-lg"
+    >
+      <lucide-icon name="mail" class="w-5 h-5 text-grayText mr-2"></lucide-icon>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="user.email"
+        placeholder="Email"
+        required
+        class="flex-1 outline-none text-text bg-transparent"
+      />
+    </div>
+
+    <div
+      class="flex items-center w-[20rem] mx-auto px-3 py-2 border border-border rounded-lg"
+    >
+      <lucide-icon name="user" class="w-5 h-5 text-grayText mr-2"></lucide-icon>
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="user.username"
+        placeholder="Username"
+        required
+        class="flex-1 outline-none text-text bg-transparent"
+      />
+    </div>
+
+    <!-- Password -->
+    <div
+      class="flex items-center w-[20rem] mx-auto px-3 py-2 border border-border rounded-lg"
+    >
+      <lucide-icon name="lock" class="w-5 h-5 text-grayText mr-2"></lucide-icon>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="user.password"
+        placeholder="Password"
+        required
+        minlength="6"
+        class="flex-1 outline-none text-text bg-transparent"
+      />
+    </div>
+
+    <!-- Confirm Password -->
+    <div
+      class="flex items-center w-[20rem] mx-auto px-3 py-2 border border-border rounded-lg"
+    >
+      <lucide-icon name="lock" class="w-5 h-5 text-grayText mr-2"></lucide-icon>
+      <input
+        type="password"
+        name="confirmPassword"
+        [(ngModel)]="user.confirmPassword"
+        placeholder="Confirm password"
+        required
+        class="flex-1 outline-none text-text bg-transparent"
+      />
+    </div>
+    <p
+      *ngIf="passwordMismatch()"
+      class="text-red-600 text-sm font-medium mt-1 text-center"
+    >
+      Passwords do not match
+    </p>
+    <p
+      *ngIf="passwordTooShort()"
+      class="text-red-600 text-sm font-medium mt-1 text-center"
+    >
+      At least 6 characters required
+    </p>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="!registerForm.valid"
+      class="bg-primary text-white font-poppins font-semibold w-[18rem] mx-auto h-[2.8rem] rounded-lg hover:bg-primaryHover transition-all duration-200 ease-in-out"
+    >
+      <ng-container *ngIf="!loading; else loadingTpl">Sign up</ng-container>
+      <ng-template #loadingTpl>
+        <lucide-icon
+          name="loader"
+          class="w-6 h-6 inline-block animate-slowspin"
+        ></lucide-icon>
+      </ng-template>
+    </button>
+  </form>
+</ng-template>
+
+<!-- Switch to Login -->
+<p class="text-center mt-4 text-grayText">
+  Already have an account?
+  <a
+    [routerLink]="['/auth/login']"
+    class="text-poppins text-primary font-bold hover:underline cursor-pointer"
+  >
+    Log in
+  </a>
+</p>

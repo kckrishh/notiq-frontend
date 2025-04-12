@@ -1,0 +1,48 @@
+<div class="px-6 pt-6 pb-10">
+  <!-- Header Section -->
+  <div
+    class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6"
+  >
+    <div>
+      <h1 class="text-heading text-2xl font-poppins font-semibold">
+        All Notes
+      </h1>
+      <p class="text-sm text-grayText mt-1 font-inter">
+        You have {{ notes.length }}
+        {{ notes.length === 1 ? "note" : "notes" }} saved. Keep going!
+      </p>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
+      <!-- Optional Search Bar -->
+      <app-search-bar (search)="onSearch($event)"></app-search-bar>
+
+      <!-- Optional Filter Dropdown -->
+      <!-- <app-filter-dropdown
+        (filter)="onFilterChange($event)"
+      ></app-filter-dropdown> -->
+    </div>
+  </div>
+
+  <!-- Notes Grid -->
+  <div
+    class="grid gap-5"
+    [ngClass]="{
+      'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4': true
+    }"
+  >
+    <app-note-card
+      *ngFor="let note of notes"
+      [title]="note.title"
+      [note]="note"
+      (toggleFavorite)="onToggleFavorite(note.id)"
+      (edit)="onEditNote(note.id)"
+    ></app-note-card>
+  </div>
+
+  <!-- No Notes Message -->
+  <p *ngIf="notes.length === 0" class="text-grayText text-center mt-10">
+    No notes found. Create your first one to get started!
+  </p>
+</div>

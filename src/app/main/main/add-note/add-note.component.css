@@ -1,0 +1,43 @@
+::ng-deep .ql-editor {
+  font-family: "Playfair Display", sans-serif;
+  font-size: 1rem;
+  color: #333333; /* Your 'text' color */
+  padding: 1rem 1.25rem; /* inner spacing */
+  line-height: 1.6;
+  border-radius: 0.75rem; /* optional: to match your rounded UI */
+  background-color: #f8f9fc; /* clean background */
+  letter-spacing: 1px;
+}
+
+::ng-deep .ql-toolbar {
+  background-color: white;
+  border: 1px solid #dde2e5;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  font-family: "Poppins", sans-serif;
+}
+
+::ng-deep .ql-toolbar button {
+  color: #14433b;
+  transition: color 0.2s;
+}
+
+::ng-deep .ql-toolbar button:hover {
+  color: #103830;
+}
+
+::ng-deep .ql-container {
+  background-color: #f5f7fa;
+  border: 1px solid #dde2e5;
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+  font-family: "Inter", sans-serif;
+  padding: 1.25rem;
+  font-size: 1rem;
+  color: #333333;
+}
+
+::ng-deep .ql-editor::before {
+  color: #666666;
+  font-style: italic;
+}

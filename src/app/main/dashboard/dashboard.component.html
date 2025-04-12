@@ -1,0 +1,24 @@
+<div class="dashboard-wrapper px-6 py-4">
+  <h1 class="text-4xl font-poppins text-heading mb-7 mt-2">Dashboard</h1>
+
+  <!-- Top Bar: Search + Filter -->
+  <div class="flex justify-between items-center mb-6">
+    <app-search-bar></app-search-bar>
+    <!--<app-filter-button></app-filter-button> -->
+  </div>
+
+  <!-- Section Title -->
+  <h2 class="text-2xl font-semibold mb-4">Recent Notes</h2>
+
+  <!-- Notes Grid -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
+  >
+    <app-note-card
+      *ngFor="let note of notes"
+      [note]="note"
+      (toggleFavorite)="handleFavorite(note.id)"
+      (toggleArchive)="handleArchive(note.id)"
+    ></app-note-card>
+  </div>
+</div>

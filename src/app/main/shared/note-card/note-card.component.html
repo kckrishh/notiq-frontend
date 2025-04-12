@@ -1,0 +1,51 @@
+<div
+  class="note-card p-4 rounded-xl h-auto flex flex-col justify-between shadow-sm border border-border bg-card w-full max-w-[300px] transition hover:shadow-md"
+>
+  <!-- Title -->
+  <h3 class="text-lg font-poppins font-semibold text-heading mb-1">
+    {{ note.title }}
+  </h3>
+
+  <!-- Created Date -->
+  <p class="text-xs text-grayText mb-2">
+    Created: {{ note.createdAt | date : "mediumDate" }}
+  </p>
+
+  <!-- Content Excerpt -->
+  <div class="text-sm text-text font-inter mb-3">
+    {{ getExcerpt(note.content) }}
+  </div>
+
+  <!-- Tags -->
+  <div *ngIf="note.tags?.length" class="flex flex-wrap gap-1 mb-3">
+    <span
+      *ngFor="let tag of note.tags"
+      class="bg-muted px-2 py-1 text-xs rounded-full text-grayText"
+    >
+      #{{ tag }}
+    </span>
+  </div>
+
+  <!-- Footer: Word Count & Icons -->
+  <div class="flex justify-between items-center mt-auto">
+    <p class="text-xs text-grayText font-medium">
+      {{ getWordCount(note.content) }} words
+    </p>
+
+    <div class="flex items-center gap-3">
+      <!-- Favorite Icon -->
+      <button (click)="onToggleFavourite()" title="Toggle Favorite">
+        <lucide-icon
+          [name]="note.isFavorite ? 'heart' : 'heart'"
+          class="w-5 h-5"
+          [ngClass]="note.isFavorite ? 'text-red-600' : 'text-grayText'"
+        ></lucide-icon>
+      </button>
+
+      <!-- Archive Icon -->
+      <button (click)="onToggleArchive()" title="Toggle Archive">
+        <lucide-icon name="archive" class="w-5 h-5 text-grayText"></lucide-icon>
+      </button>
+    </div>
+  </div>
+</div>

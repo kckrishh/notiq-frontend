@@ -1,0 +1,27 @@
+<div class="px-8 pt-6 pb-10">
+  <h1 class="text-heading font-poppins text-3xl font-bold mb-2">
+    Favorite Notes
+  </h1>
+  <p class="text-grayText text-sm font-inter mb-6">
+    Here are the notes you've marked as favorites. ✨
+  </p>
+
+  <!-- Optional Filter/Search Toolbar -->
+  <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
+    <!-- Optional Search Bar -->
+    <app-search-bar (search)="onSearch($event)"></app-search-bar>
+
+    <!-- Filter dropdown if needed -->
+    <!-- <app-filter-dropdown></app-filter-dropdown> -->
+  </div>
+
+  <!-- Notes grid -->
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6"
+  >
+    <app-note-card
+      *ngFor="let note of filteredFavorites"
+      [note]="note"
+    ></app-note-card>
+  </div>
+</div>

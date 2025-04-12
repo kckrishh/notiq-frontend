@@ -1,0 +1,82 @@
+<h1
+  class="font-poppins text-heading text-3xl text-center transition duration-200"
+>
+  Log in
+</h1>
+<div>
+  <form
+    (ngSubmit)="onLogin(loginForm)"
+    #loginForm="ngForm"
+    class="flex flex-col gap-4 mt-[1rem] text-inter transition duration-200"
+  >
+    <div
+      class="flex mx-auto justify-center item-center w-[20rem] px-1 py-2 border border-border rounded-lg"
+    >
+      <lucide-icon name="mail" class="w-5 h-5 text-grayText mr-2"></lucide-icon>
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="user.email"
+        placeholder="Email"
+        required
+        class="outline-none text-text"
+      />
+    </div>
+
+    <div
+      class="flex mx-auto justify-center item-center w-[20rem] px-1 py-2 border border-border rounded-lg"
+    >
+      <lucide-icon name="lock" class="w-5 h-5 text-grayText mr-2"></lucide-icon>
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="user.password"
+        placeholder="Password"
+        required
+        class="outline-none text-text"
+      />
+    </div>
+
+    <p class="text-sm text-center w-[20rem] mx-auto mt-1">
+      <a
+        [routerLink]="['/auth/forgot-password']"
+        class="text-primary font-medium hover:underline"
+      >
+        Forgot password?
+      </a>
+    </p>
+
+    <button
+      type="submit"
+      class="bg-primary text-poppins mt-4 w-[18rem] p-2 mx-auto h-[2.8rem] rounded-lg text-white font-semibold hover:bg-hover hover:cursor-pointer transition-all duration-200 ease-in-out"
+      [ngClass]="{
+        'hover:cursor-not-allowed hover:bg-primary':
+          !loginForm.valid || loading,
+        'hover:cursor-pointer': loginForm.valid && !loading
+      }"
+      [disabled]="loading"
+    >
+      <ng-container *ngIf="!loading; else loadingTpl">Log in</ng-container>
+      <ng-template #loadingTpl>
+        <lucide-icon
+          name="loader"
+          class="animate-slowspin w-6 h6 m-auto"
+        ></lucide-icon>
+      </ng-template>
+    </button>
+  </form>
+  <p
+    *ngIf="errorMessage"
+    class="text-red-600 text-sm font-medium text-center w-[20rem] mx-auto mt-5"
+  >
+    {{ errorMessage }}
+  </p>
+  <p class="text-center mt-4 text-grayText">
+    Don't have an account?
+    <a
+      [routerLink]="['/auth/register']"
+      class="text-poppins text-primary font-bold"
+      >Sign up</a
+    >
+  </p>
+</div>

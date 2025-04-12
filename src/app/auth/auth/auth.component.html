@@ -1,0 +1,19 @@
+<div
+  class="min-h-screen bg-background flex flex-col items-center justify-start px-4 font-inter"
+>
+  <div class="text-center mb-0">
+    <img
+      src="logo.png"
+      alt="Notiq - Secure your thoughts"
+      class="mx-auto h-[18rem] w-[18rem] scale-100 relative"
+    />
+  </div>
+
+  <div
+    class="w-full max-w-md mt-[-5rem] h-[56vh] bg-card p-6 rounded-xl shadow-md"
+  >
+    <div [@routeAnimations]="preparetRoute(outlet)">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+  </div>
+</div>

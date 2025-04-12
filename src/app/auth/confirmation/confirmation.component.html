@@ -1,0 +1,53 @@
+<div class="mt-16">
+  <div *ngIf="isValid === true" class="text-center px-6">
+    <lucide-icon
+      name="check-circle"
+      class="w-12 h-12 text-green-600 mx-auto mb-2"
+    />
+    <h2 class="text-2xl font-poppins text-heading font-semibold mb-1">
+      Email Verified!
+    </h2>
+    <p class="text-inter text-grayText text-sm">
+      Your account has been successfully verified. You can now log in.
+    </p>
+
+    <a
+      routerLink="/auth/login"
+      class="mt-6 inline-block px-6 py-2 bg-primary text-white font-poppins rounded-lg shadow-md hover:bg-hover transition-all duration-200"
+    >
+      Go to Login
+    </a>
+  </div>
+  <div *ngIf="isValid === false" class="text-center px-6">
+    <lucide-icon name="x-circle" class="w-12 h-12 text-red-600 mx-auto mb-2" />
+    <h2 class="text-2xl font-poppins text-heading font-semibold mb-1">
+      Verification Failed
+    </h2>
+    <p class="text-inter text-grayText text-sm mb-4">
+      {{ message }}
+    </p>
+
+    <ng-container
+      *ngIf="
+        (message || '').toLowerCase().includes('log in');
+        else showRegister
+      "
+    >
+      <a
+        routerLink="/auth/login"
+        class="mt-4 inline-block px-6 py-2 bg-primary text-white font-poppins rounded-lg shadow-md hover:bg-hover transition-all duration-200"
+      >
+        Go to Login
+      </a>
+    </ng-container>
+
+    <ng-template #showRegister>
+      <a
+        routerLink="/auth/register"
+        class="mt-4 inline-block px-6 py-2 bg-primary text-white font-poppins rounded-lg shadow-md hover:bg-hover transition-all duration-200"
+      >
+        Create Account
+      </a>
+    </ng-template>
+  </div>
+</div>

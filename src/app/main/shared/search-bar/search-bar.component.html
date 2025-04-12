@@ -1,0 +1,12 @@
+<div
+  class="w-full max-w-[22rem] flex items-center gap-2 border border-border shadow-sm bg-gray-100 rounded-lg px-3 py-2"
+>
+  <lucide-icon name="search" class="w-5 h-5 text-grayText"></lucide-icon>
+  <input
+    [(ngModel)]="query"
+    (input)="onSearch()"
+    type="text"
+    placeholder="Search notes..."
+    class="flex-1 outline-none bg-transparent text-sm text-text font-inter sm:w-[25rem]"
+  />
+</div>

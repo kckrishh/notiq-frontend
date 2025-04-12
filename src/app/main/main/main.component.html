@@ -1,0 +1,19 @@
+<div class="flex h-screen">
+  <section
+    [ngClass]="{
+      'absolute inset-0 bg-black/40 backdrop-blur-sm': !isSideBarEnabled
+    }"
+  >
+    <app-sidebar></app-sidebar>
+  </section>
+  <section class="flex-1">
+    <app-alert-notification></app-alert-notification>
+    <router-outlet></router-outlet>
+  </section>
+  <div class="fixed bottom-0 right-0 m-4 sm:bottom-6 sm:right-12">
+    <app-add-note
+      (pannelOpen)="disableSideBar()"
+      (pannelClose)="enableSidebar()"
+    ></app-add-note>
+  </div>
+</div>

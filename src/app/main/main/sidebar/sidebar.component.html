@@ -1,0 +1,41 @@
+<!-- Sidebar toggle button (mobile only) -->
+<button
+  class="sm:hidden fixed top-4 left-4 z-50 bg-primary text-white p-2 rounded-md shadow-md hover:bg-hover transition duration-300"
+  (click)="toggleSidebar()"
+>
+  <lucide-icon
+    [name]="isSidebarOpen ? 'x' : 'menu'"
+    class="w-6 h-6"
+  ></lucide-icon>
+</button>
+
+<!-- Backdrop -->
+<div
+  class="fixed inset-0 bg-black opacity-30 z-40 sm:hidden"
+  *ngIf="isSidebarOpen"
+  (click)="isSidebarOpen = false"
+></div>
+
+<!-- Sidebar -->
+<div
+  class="fixed sm:sticky top-0 left-0 h-screen w-[70vw] sm:w-[22vw] bg-primary text-white transform transition-transform duration-300 z-40 shadow-lg"
+  [class.-translate-x-full]="!isSidebarOpen && isMobile"
+>
+  <!-- Logo -->
+  <div class="logo">
+    <img src="logo2.png" alt="Notiq Logo" class="h-56 mb-[-2rem] m-auto" />
+  </div>
+
+  <!-- Navigation Links -->
+  <nav class="flex flex-col gap-2">
+    @for (link of content; track $index) {
+    <a
+      [routerLink]="link.route"
+      class="flex items-center gap-3 px-6 py-2 hover:bg-hover transition-all duration-200 rounded-md pl-[4rem] sm:pl-[6rem]"
+    >
+      <lucide-icon [name]="link.icon" class="w-5 h-5 text-white"></lucide-icon>
+      <span class="text-white font-medium">{{ link.name }}</span>
+    </a>
+    }
+  </nav>
+</div>
