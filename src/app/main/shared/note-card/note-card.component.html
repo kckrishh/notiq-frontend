@@ -34,7 +34,11 @@
 
     <div class="flex items-center gap-3">
       <!-- Favorite Icon -->
-      <button (click)="onToggleFavourite()" title="Toggle Favorite">
+      <button
+        *ngIf="context !== 'archives' && context !== 'trash'"
+        (click)="onToggleFavourite()"
+        title="Toggle Favorite"
+      >
         <lucide-icon
           [name]="note.isFavorite ? 'heart' : 'heart'"
           class="w-5 h-5"
@@ -43,8 +47,53 @@
       </button>
 
       <!-- Archive Icon -->
-      <button (click)="onToggleArchive()" title="Toggle Archive">
+      <button
+        *ngIf="context !== 'archives' && context !== 'trash'"
+        (click)="onToggleArchive()"
+        title="Archive"
+      >
         <lucide-icon name="archive" class="w-5 h-5 text-grayText"></lucide-icon>
+      </button>
+
+      <!-- Unarchive Icon -->
+      <button
+        *ngIf="context === 'archives'"
+        (click)="onToggleArchive()"
+        title="Unarchive"
+      >
+        <lucide-icon
+          name="corner-up-left"
+          class="w-5 h-5 text-primary"
+        ></lucide-icon>
+      </button>
+
+      <!-- Move to Trash -->
+      <button
+        *ngIf="context !== 'trash'"
+        (click)="onToggleTrash()"
+        title="Move to Trash"
+      >
+        <lucide-icon name="trash" class="w-5 h-5 text-grayText"></lucide-icon>
+      </button>
+
+      <!-- Restore from Trash -->
+      <button
+        *ngIf="context === 'trash'"
+        (click)="onToggleTrash()"
+        title="Restore from Trash"
+      >
+        <lucide-icon
+          name="rotate-ccw"
+          class="w-5 h-5 text-primary"
+        ></lucide-icon>
+      </button>
+
+      <!-- Delete Permanently -->
+      <button *ngIf="context === 'trash'" title="Delete Permanently">
+        <lucide-icon
+          name="trash-2"
+          class="w-5 h-5 text-red-600 hover:text-hover"
+        ></lucide-icon>
       </button>
     </div>
   </div>

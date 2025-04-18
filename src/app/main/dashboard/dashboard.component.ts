@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NoteService } from '../services/note.service';
 import { DataService } from '../services/data.service';
 import { MessageService } from '../services/message.service';
+import { NoteActionService } from '../services/note-action.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private noteService: NoteService,
     private dataService: DataService,
-    private messageService: MessageService
+    private noteAction: NoteActionService
   ) {}
 
   notes: any = [];
@@ -37,45 +38,24 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  handleFavorite(id: number) {
-    this.noteService.handleFavorite(id).subscribe({
-      next: () => {
-        const note = this.notes.find((n: any) => n.id == id);
-        if (note.isFavorite) {
-          this.messageService.showMessage(
-            'Note removed from favorite',
-            'success'
-          );
-          note.isFavorite = !note.isFavorite;
-        } else {
-          this.messageService.showMessage('Note added to favorite', 'success');
-          note.isFavorite = !note.isFavorite;
-        }
-      },
-      error: (err) => {
-        this.messageService.showMessage(
-          'Sorry could not add to favorite',
-          'error'
-        );
-      },
-    });
+  handleFavorite(note: any) {
+    this.noteAction.handleFavorite(note);
   }
 
-  handleArchive(id: number) {
-    this.noteService.handleArchive(id).subscribe({
-      next: () => {
-        const note = this.notes.find((n: any) => n.id == id);
-        note.isArchive = !note.isArchive;
-        this.fetchDashboardNotes();
-        this.messageService.showMessage('Note Archived', 'success');
-      },
-      error: (err) => {
-        this.messageService.showMessage('Failed to archive the note', 'error');
-      },
-    });
+  handleArchive(note: any) {
+    this.noteAction.handleArchive(note);
+  }
+
+  handleTrash(note: any) {
+    this.noteAction.handleTrash(note);
   }
 
   handleSubmit() {
     this.fetchDashboardNotes();
+  }
+
+  openNewNotePanel() {
+    const btn = document.querySelector('app-add-note button');
+    if (btn) (btn as HTMLButtonElement).click();
   }
 }

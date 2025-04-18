@@ -11,6 +11,10 @@ import {
   Trash,
   X,
   Plus,
+  CornerUpLeft,
+  RefreshCcw,
+  Trash2,
+  RotateCcw,
 } from 'lucide-angular';
 import { FormsModule } from '@angular/forms';
 
@@ -59,6 +63,10 @@ import { AlertNotificationComponent } from './shared/alert-notification/alert-no
       X,
       Search,
       Plus,
+      CornerUpLeft,
+      RefreshCcw,
+      RotateCcw,
+      Trash2,
     }),
     FormsModule,
   ],

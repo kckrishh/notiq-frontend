@@ -26,7 +26,7 @@ const routes: Routes = [
         data: { animation: 'NotesPage' },
       },
       {
-        path: 'favourites',
+        path: 'favorites',
         component: FavouritesComponent,
         data: { animation: 'FavouritesPage' },
       },

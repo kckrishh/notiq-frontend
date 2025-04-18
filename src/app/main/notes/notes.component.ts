@@ -1,73 +1,49 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NoteService } from '../services/note.service';
+import { NoteActionService } from '../services/note-action.service';
+import { DataService } from '../services/data.service';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css',
 })
-export class NotesComponent {
-  notes = [
-    {
-      id: 1,
-      title: 'Meeting Notes',
-      content:
-        '<p>Discuss project timeline, budget constraints, and deliverables.</p>',
-      favorite: true,
-      archived: false,
-      trashed: false,
-      createdAt: new Date('2025-04-01T09:00:00'),
-      updatedAt: null,
-    },
-    {
-      id: 2,
-      title: 'Grocery List',
-      content:
-        '<ul><li>Milk</li><li>Eggs</li><li>Bread</li><li>Spinach</li></ul>',
-      favorite: false,
-      archived: false,
-      trashed: false,
-      createdAt: new Date('2025-04-02T14:30:00'),
-      updatedAt: null,
-    },
-    {
-      id: 3,
-      title: 'UI Design Ideas',
-      content: '<p>Use soft shadows, rounded cards, and minimalist icons.</p>',
-      favorite: true,
-      archived: false,
-      trashed: false,
-      createdAt: new Date('2025-04-03T11:45:00'),
-      updatedAt: null,
-    },
-    {
-      id: 4,
-      title: 'Books to Read',
-      content:
-        '<p><strong>Deep Work</strong> by Cal Newport, <em>Atomic Habits</em> by James Clear</p>',
-      favorite: false,
-      archived: true,
-      trashed: false,
-      createdAt: new Date('2025-04-04T17:20:00'),
-      updatedAt: null,
-    },
-    {
-      id: 5,
-      title: 'Quick Code Snippet',
-      content: `<pre><code>console.log("Hello, Notiq!");</code></pre>`,
-      favorite: false,
-      archived: false,
-      trashed: true,
-      createdAt: new Date('2025-04-05T08:15:00'),
-      updatedAt: null,
-    },
-  ];
+export class NotesComponent implements OnInit {
+  ngOnInit(): void {
+    this.loadNotes();
 
-  onToggleFavorite(id: number) {
-    console.log(id);
+    this.data.refreshNeeded$.subscribe(() => {
+      this.loadNotes();
+    });
   }
 
-  onEditNote(id: number) {
-    console.log(id);
+  notes: any = [];
+
+  constructor(
+    private noteService: NoteService,
+    private noteAction: NoteActionService,
+    private message: MessageService,
+    private data: DataService
+  ) {}
+
+  loadNotes() {
+    this.noteService.getAllNotes().subscribe({
+      next: (res) => {
+        this.notes = res;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  onToggleFavorite(note: any) {
+    this.noteAction.handleFavorite(note);
+  }
+
+  onArchive(note: any) {
+    this.noteAction.handleArchive(note);
   }
 
   onSearch(a: any) {

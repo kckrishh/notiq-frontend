@@ -8,23 +8,26 @@ export const mainGuard: CanActivateFn = () => {
   const http = inject(HttpClient);
   const router = inject(Router);
 
-  return http
-    .get('http://localhost:8080/auth/me', {
-      responseType: 'text',
-      withCredentials: true,
-    })
-    .pipe(
-      map((user: any) => {
-        console.log('Guard success: user is: ', user);
-        if (!user) {
-          router.navigate(['/auth/login']);
-          return false;
-        }
-        return true;
-      }),
-      catchError(() => {
-        router.navigate(['/auth/login']);
-        return of(false);
+  return (
+    http
+      // .get('http://localhost:8080/auth/me', {
+      .get('https://notiq-backend.onrender.com/auth/me', {
+        responseType: 'text',
+        withCredentials: true,
       })
-    );
+      .pipe(
+        map((user: any) => {
+          console.log('Guard success: user is: ', user);
+          if (!user) {
+            router.navigate(['/auth/login']);
+            return false;
+          }
+          return true;
+        }),
+        catchError(() => {
+          router.navigate(['/auth/login']);
+          return of(false);
+        })
+      )
+  );
 };

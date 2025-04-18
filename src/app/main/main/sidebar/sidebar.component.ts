@@ -9,7 +9,7 @@ export class SidebarComponent implements OnInit {
   content = [
     { name: 'Dashboard', icon: 'home', route: 'dashboard' },
     { name: 'Notes', icon: 'file-text', route: 'notes' },
-    { name: 'Favorites', icon: 'heart', route: 'favourites' },
+    { name: 'Favorites', icon: 'heart', route: 'favorites' },
     { name: 'Archive', icon: 'archive', route: 'archives' },
     { name: 'Trash', icon: 'trash', route: 'trash' },
   ];

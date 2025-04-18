@@ -1,36 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NoteService } from '../services/note.service';
+import { NoteActionService } from '../services/note-action.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-archive',
   templateUrl: './archive.component.html',
   styleUrl: './archive.component.css',
 })
-export class ArchiveComponent {
-  filteredArchivedNotes = [
-    {
-      id: 4,
-      title: 'Books to Read',
-      content:
-        '<p><strong>Deep Work</strong> by Cal Newport, <em>Atomic Habits</em> by James Clear</p>',
-      favorite: false,
-      archived: true,
-      trashed: false,
-      createdAt: new Date('2025-04-04T17:20:00'),
-      updatedAt: null,
-    },
-    {
-      id: 5,
-      title: 'Quick Code Snippet',
-      content: `<pre><code>console.log("Hello, Notiq!");</code></pre>`,
-      favorite: false,
-      archived: false,
-      trashed: true,
-      createdAt: new Date('2025-04-05T08:15:00'),
-      updatedAt: null,
-    },
-  ];
+export class ArchiveComponent implements OnInit {
+  filteredArchivedNotes: any = [];
+
+  constructor(
+    private noteService: NoteService,
+    private noteAction: NoteActionService,
+    private data: DataService
+  ) {}
+
+  ngOnInit(): void {
+    this.loadArchivedNotes();
+
+    this.data.refreshNeeded$.subscribe(() => {
+      this.loadArchivedNotes();
+    });
+  }
 
   onSearch(query: string) {
     console.log('Search query:', query);
+  }
+
+  loadArchivedNotes() {
+    this.noteService.getArchivedNotes().subscribe({
+      next: (res) => {
+        this.filteredArchivedNotes = res;
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  handleArchive(note: any) {
+    this.noteAction.handleArchive(note);
+  }
+
+  handleTrash(note: any) {
+    this.noteAction.handleTrash(note);
   }
 }

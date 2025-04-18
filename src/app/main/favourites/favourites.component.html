@@ -22,6 +22,10 @@
     <app-note-card
       *ngFor="let note of filteredFavorites"
       [note]="note"
+      [context]="'favorites'"
+      (toggleFavorite)="handleFavorite(note)"
+      (toggleArchive)="handleArchive(note)"
+      (toggleTrash)="handleTrash(note)"
     ></app-note-card>
   </div>
 </div>

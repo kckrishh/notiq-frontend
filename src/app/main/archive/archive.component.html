@@ -26,5 +26,8 @@
   <app-note-card
     *ngFor="let note of filteredArchivedNotes"
     [note]="note"
+    [context]="'archives'"
+    (toggleArchive)="handleArchive(note)"
+    (toggleTrash)="handleTrash(note)"
   ></app-note-card>
 </div>

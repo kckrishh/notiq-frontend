@@ -6,7 +6,8 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/auth';
+  // private baseUrl = 'http://localhost:8080/auth';
+  private baseUrl = 'https://notiq-backend.onrender.com/auth';
 
   constructor(private http: HttpClient) {}
 

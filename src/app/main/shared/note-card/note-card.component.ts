@@ -7,15 +7,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class NoteCardComponent {
   @Input() note: any;
+  @Input() context: 'notes' | 'dashboard' | 'favorites' | 'archives' | 'trash' =
+    'dashboard';
 
   @Output() toggleFavorite = new EventEmitter<void>();
   @Output() toggleArchive = new EventEmitter<void>();
+  @Output() toggleTrash = new EventEmitter<void>();
 
   onToggleFavourite() {
     this.toggleFavorite.emit();
   }
   onToggleArchive() {
     this.toggleArchive.emit();
+  }
+
+  onToggleTrash() {
+    this.toggleTrash.emit();
   }
 
   getExcerpt(content: string): string {

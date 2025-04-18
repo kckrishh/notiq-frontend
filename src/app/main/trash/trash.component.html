@@ -26,5 +26,7 @@
   <app-note-card
     *ngFor="let note of filteredTrashedNotes"
     [note]="note"
+    [context]="'trash'"
+    (toggleTrash)="handleTrash(note)"
   ></app-note-card>
 </div>

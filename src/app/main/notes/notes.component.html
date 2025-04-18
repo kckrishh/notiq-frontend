@@ -34,10 +34,11 @@
   >
     <app-note-card
       *ngFor="let note of notes"
+      [context]="'notes'"
       [title]="note.title"
       [note]="note"
-      (toggleFavorite)="onToggleFavorite(note.id)"
-      (edit)="onEditNote(note.id)"
+      (toggleFavorite)="onToggleFavorite(note)"
+      (toggleArchive)="onArchive(note)"
     ></app-note-card>
   </div>
 
