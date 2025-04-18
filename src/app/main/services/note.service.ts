@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 export class NoteService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/notes';
-  // baseUrl = 'https://notiq-backend.onrender.com/notes';
+  // baseUrl = 'http://localhost:8080/notes';
+  baseUrl = 'https://notiq-backend.onrender.com/notes';
 
   createNote(note: any) {
     return this.http.post(this.baseUrl, note, {
