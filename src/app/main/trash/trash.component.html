@@ -1,32 +1,32 @@
-<div class="px-8 pt-6 pb-10">
-  <h1 class="text-heading font-poppins text-3xl font-bold mb-2">
-    Trashed Notes
+<div class="dashboard-wrapper px-4 sm:px-6 lg:px-12 py-6">
+  <h1
+    class="text-3xl lg:text-4xl font-poppins font-bold text-heading mb-8 tracking-tight"
+  >
+    Trash
   </h1>
-  <p class="text-grayText text-sm font-inter mb-6">
-    These notes are in your trash. You can permanently delete or restore them.
-    🗑️
-  </p>
 
-  <!-- Search & Filter -->
-  <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-    <!-- Optional Search Bar -->
-    <app-search-bar (search)="onSearch($event)"></app-search-bar>
-
-    <!-- Optional Filter Dropdown -->
-    <!-- <app-filter-dropdown
-        (filter)="onFilterChange($event)"
-      ></app-filter-dropdown> -->
+  <div
+    class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 p-4 bg-white rounded-xl shadow-sm border border-border"
+  >
+    <app-search-bar class="w-full sm:flex-1"></app-search-bar>
   </div>
-</div>
 
-<!-- Notes grid -->
-<div
-  class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6"
->
-  <app-note-card
-    *ngFor="let note of filteredTrashedNotes"
-    [note]="note"
-    [context]="'trash'"
-    (toggleTrash)="handleTrash(note)"
-  ></app-note-card>
+  <h2
+    class="text-xl font-poppins font-semibold text-heading mb-4 border-b border-border pb-1"
+  >
+    Trashed Notes
+  </h2>
+
+  <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+    <app-note-card
+      *ngFor="let note of filteredTrashedNotes"
+      [note]="note"
+      [context]="'trash'"
+      (toggleTrash)="handleTrash(note)"
+    ></app-note-card>
+  </div>
+
+  <div *ngIf="filteredTrashedNotes.length === 0" class="text-center py-16">
+    <p class="text-grayText text-lg font-inter">Your trash is empty.</p>
+  </div>
 </div>

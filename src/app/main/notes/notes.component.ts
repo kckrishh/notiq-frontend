@@ -49,4 +49,8 @@ export class NotesComponent implements OnInit {
   onSearch(a: any) {
     console.log(a);
   }
+
+  onTrash(note: any) {
+    this.noteAction.handleTrash(note);
+  }
 }

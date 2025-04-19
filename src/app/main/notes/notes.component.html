@@ -1,49 +1,36 @@
-<div class="px-6 pt-6 pb-10">
-  <!-- Header Section -->
-  <div
-    class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6"
+<div class="dashboard-wrapper px-4 sm:px-6 lg:px-12 py-6">
+  <h1
+    class="text-3xl lg:text-4xl font-poppins font-bold text-heading mb-8 tracking-tight"
   >
-    <div>
-      <h1 class="text-heading text-2xl font-poppins font-semibold">
-        All Notes
-      </h1>
-      <p class="text-sm text-grayText mt-1 font-inter">
-        You have {{ notes.length }}
-        {{ notes.length === 1 ? "note" : "notes" }} saved. Keep going!
-      </p>
-    </div>
+    All Notes
+  </h1>
 
-    <!-- Controls -->
-    <div class="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-0">
-      <!-- Optional Search Bar -->
-      <app-search-bar (search)="onSearch($event)"></app-search-bar>
-
-      <!-- Optional Filter Dropdown -->
-      <!-- <app-filter-dropdown
-        (filter)="onFilterChange($event)"
-      ></app-filter-dropdown> -->
-    </div>
+  <div
+    class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 p-4 bg-white rounded-xl shadow-sm border border-border"
+  >
+    <app-search-bar class="w-full sm:flex-1"></app-search-bar>
   </div>
 
-  <!-- Notes Grid -->
-  <div
-    class="grid gap-5"
-    [ngClass]="{
-      'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4': true
-    }"
+  <h2
+    class="text-xl font-poppins font-semibold text-heading mb-4 border-b border-border pb-1"
   >
+    Your Notes
+  </h2>
+
+  <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
     <app-note-card
       *ngFor="let note of notes"
-      [context]="'notes'"
-      [title]="note.title"
       [note]="note"
+      [context]="'notes'"
       (toggleFavorite)="onToggleFavorite(note)"
       (toggleArchive)="onArchive(note)"
+      (toggleTrash)="onTrash(note)"
     ></app-note-card>
   </div>
 
-  <!-- No Notes Message -->
-  <p *ngIf="notes.length === 0" class="text-grayText text-center mt-10">
-    No notes found. Create your first one to get started!
-  </p>
+  <div *ngIf="notes.length === 0" class="text-center py-16">
+    <p class="text-grayText text-lg font-inter">
+      You don’t have any notes yet.
+    </p>
+  </div>
 </div>
