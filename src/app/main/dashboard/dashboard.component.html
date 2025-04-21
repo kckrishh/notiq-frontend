@@ -1,48 +1,86 @@
 <div class="dashboard-wrapper px-4 sm:px-6 lg:px-12 py-6">
   <!-- Page Title -->
-  <h1
-    class="text-3xl lg:text-4xl font-poppins font-bold text-heading mb-8 tracking-tight"
-  >
+  <h1 class="text-3xl font-poppins font-bold text-heading mb-6 tracking-tight">
     Dashboard
   </h1>
 
-  <!-- Top Bar: Search + (Future) Filter -->
-  <div
-    class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 p-4 bg-white rounded-xl shadow-sm border border-border"
-  >
-    <app-search-bar class="w-full sm:flex-1"></app-search-bar>
-    <!-- <app-filter-button></app-filter-button> -->
-  </div>
+  <p class="text-grayText text-sm font-inter mb-6">
+    {{ grettings }}! Here’s a summary of your notes and activities.
+  </p>
 
-  <!-- Section Header -->
-  <h2
-    class="text-xl font-poppins font-semibold text-heading mb-4 border-b border-border pb-1"
-  >
-    Recent Notes
-  </h2>
-
-  <!-- Notes Grid -->
-  <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
-    <app-note-card
-      *ngFor="let note of notes"
-      [note]="note"
-      [context]="'dashboard'"
-      (toggleFavorite)="handleFavorite(note)"
-      (toggleArchive)="handleArchive(note)"
-      (toggleTrash)="handleTrash(note)"
-    ></app-note-card>
-  </div>
-
-  <!-- Empty State -->
-  <div *ngIf="noNotes" class="text-center py-16">
-    <p class="text-grayText text-lg mb-5 font-inter">
-      You don’t have any notes yet.
-    </p>
-    <button
-      (click)="openNewNotePanel()"
-      class="bg-primary hover:bg-hover text-white px-6 py-3 rounded-lg text-base font-poppins transition duration-200 shadow-sm"
+  <!-- Metrics Summary Section -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div
+      class="bg-white hover:bg-gray-50 p-5 rounded-xl shadow border border-border flex items-center gap-4 transition duration-200"
     >
-      ➕ Create Your First Note
-    </button>
+      <lucide-icon name="file-text" class="text-primary w-6 h-6"></lucide-icon>
+      <div>
+        <p class="text-sm text-grayText font-inter">Total Notes</p>
+        <p class="text-xl text-heading font-semibold">{{ total }}</p>
+      </div>
+    </div>
+    <div
+      class="bg-white p-5 hover:bg-gray-50 rounded-xl shadow border border-border flex items-center gap-4 transition duration-200"
+    >
+      <lucide-icon name="heart" class="text-pink-500 w-6 h-6"></lucide-icon>
+      <div>
+        <p class="text-sm text-grayText font-inter">Favorites</p>
+        <p class="text-xl text-heading font-semibold">{{ favCount }}</p>
+      </div>
+    </div>
+    <div
+      class="bg-white p-5 hover:bg-gray-50 rounded-xl shadow border border-border flex items-center gap-4 transition duration-200"
+    >
+      <lucide-icon name="archive" class="text-grayText w-6 h-6"></lucide-icon>
+      <div>
+        <p class="text-sm text-grayText font-inter">Archived</p>
+        <p class="text-xl text-heading font-semibold">{{ archiveCount }}</p>
+      </div>
+    </div>
+    <div
+      class="bg-white p-5 hover:bg-gray-50 rounded-xl shadow border border-border flex items-center gap-4 transition duration-200"
+    >
+      <lucide-icon name="trash" class="text-red-600 w-6 h-6"></lucide-icon>
+      <div>
+        <p class="text-sm text-grayText font-inter">Trash</p>
+        <p class="text-xl text-heading font-semibold">{{ trashCount }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Notes Section -->
+  <div class="bg-white rounded-xl border border-border shadow p-6">
+    <div class="flex justify-between items-center mb-6">
+      <h2
+        class="text-xl font-poppins font-semibold text-heading border-b border-border pb-1"
+      >
+        Recent Notes
+      </h2>
+    </div>
+
+    <!-- Notes Grid -->
+    <div class="grid gap-5 sm:grid-cols-2 md:grid-cols-3">
+      <app-note-card
+        *ngFor="let note of notes"
+        [note]="note"
+        [context]="'dashboard'"
+        (toggleFavorite)="handleFavorite(note)"
+        (toggleArchive)="handleArchive(note)"
+        (toggleTrash)="handleTrash(note)"
+      ></app-note-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="noNotes" class="text-center py-16">
+      <p class="text-grayText text-lg mb-5 font-inter">
+        You don’t have any notes yet.
+      </p>
+      <button
+        (click)="openNewNotePanel()"
+        class="bg-primary hover:bg-hover text-white px-6 py-3 rounded-lg text-base font-poppins transition duration-200 shadow-sm"
+      >
+        ➕ Create Your First Note
+      </button>
+    </div>
   </div>
 </div>

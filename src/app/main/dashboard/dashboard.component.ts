@@ -18,6 +18,11 @@ export class DashboardComponent implements OnInit {
 
   notes: any = [];
   noNotes: boolean = false;
+  total: number = 0;
+  favCount: number = 0;
+  archiveCount: number = 0;
+  trashCount: number = 0;
+  grettings: string = '';
 
   fetchDashboardNotes() {
     this.noteService.getDashboardNotes().subscribe({
@@ -34,11 +39,40 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  setGrettings() {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      this.grettings = 'Good Morning!';
+    } else if (hour < 18) {
+      this.grettings = 'Good Afternoon!';
+    } else {
+      this.grettings = 'Good Evening!';
+    }
+  }
+
+  fetchSummary() {
+    this.noteService.getSummary().subscribe({
+      next: (res: any) => {
+        this.total = res.total;
+        this.favCount = res.favorite;
+        this.archiveCount = res.archived;
+        this.trashCount = res.trashed;
+        // console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
   ngOnInit(): void {
     this.fetchDashboardNotes();
+    this.fetchSummary();
+    this.setGrettings();
 
     this.dataService.refreshNeeded$.subscribe(() => {
       this.fetchDashboardNotes();
+      this.fetchSummary();
     });
   }
 

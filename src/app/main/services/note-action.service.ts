@@ -35,7 +35,11 @@ export class NoteActionService {
   handleArchive(note: any) {
     this.note.handleArchive(note.id).subscribe({
       next: (res) => {
-        this.message.showMessage('Note archived', 'success');
+        if (note.isArchived) {
+          this.message.showMessage('Note restored from archive', 'success');
+        } else {
+          this.message.showMessage('Note archived', 'success');
+        }
         note.isArchived = !note.isArchived;
         this.data.triggerRefresh();
       },
@@ -48,12 +52,28 @@ export class NoteActionService {
   handleTrash(note: any) {
     this.note.handleTrash(note.id).subscribe({
       next: (res) => {
-        this.message.showMessage('Note moved to trash', 'success');
+        if (note.isTrashed) {
+          this.message.showMessage('Note restored from trash', 'success');
+        } else {
+          this.message.showMessage('Note moved to trash', 'success');
+        }
         note.isTrashed = !note.isTrashed;
         this.data.triggerRefresh();
       },
       error: (err) => {
         this.message.showMessage('Sorry could not move to trash', 'error');
+      },
+    });
+  }
+
+  handleDelete(noteId: any) {
+    this.note.deleteNode(noteId).subscribe({
+      next: (res) => {
+        this.message.showMessage('Note deleted', 'success');
+        this.data.triggerRefresh();
+      },
+      error: (err) => {
+        this.message.showMessage('Sorry could not delete', 'error');
       },
     });
   }

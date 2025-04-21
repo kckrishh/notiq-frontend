@@ -24,8 +24,21 @@ export class NoteService {
     });
   }
 
+  deleteNode(noteId: any) {
+    return this.http.delete(`${this.baseUrl}/${noteId}`, {
+      responseType: 'text',
+      withCredentials: true,
+    });
+  }
+
   getAllNotes() {
     return this.http.get(this.baseUrl, {
+      withCredentials: true,
+    });
+  }
+
+  getSummary() {
+    return this.http.get(`${this.baseUrl}/summary`, {
       withCredentials: true,
     });
   }
