@@ -33,6 +33,18 @@
     </p>
 
     <div class="flex items-center gap-3">
+      <!-- edit icon  -->
+      <button
+        *ngIf="context !== 'archives' && context !== 'trash'"
+        (click)="onEditNote(note)"
+        title="Edit Note"
+      >
+        <lucide-icon
+          name="edit"
+          class="w-5 h-5 text-primary hover:text-hover"
+        ></lucide-icon>
+      </button>
+
       <!-- Favorite Icon -->
       <button
         *ngIf="context !== 'archives' && context !== 'trash'"

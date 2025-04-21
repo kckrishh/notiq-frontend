@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   notes: any = [];
+  noNotes: boolean = false;
 
   fetchDashboardNotes() {
     this.noteService.getDashboardNotes().subscribe({
@@ -36,6 +37,9 @@ export class DashboardComponent implements OnInit {
     this.dataService.refreshNeeded$.subscribe(() => {
       this.fetchDashboardNotes();
     });
+    if (this.notes.length === 0) {
+      this.noNotes = true;
+    }
   }
 
   handleFavorite(note: any) {

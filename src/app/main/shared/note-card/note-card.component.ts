@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NoteActionService } from '../../services/note-action.service';
 
 @Component({
   selector: 'app-note-card',
@@ -10,9 +11,15 @@ export class NoteCardComponent {
   @Input() context: 'notes' | 'dashboard' | 'favorites' | 'archives' | 'trash' =
     'dashboard';
 
+  constructor(private noteAction: NoteActionService) {}
+
   @Output() toggleFavorite = new EventEmitter<void>();
   @Output() toggleArchive = new EventEmitter<void>();
   @Output() toggleTrash = new EventEmitter<void>();
+
+  onEditNote(note: any) {
+    this.noteAction.triggerEdit(note);
+  }
 
   onToggleFavourite() {
     this.toggleFavorite.emit();

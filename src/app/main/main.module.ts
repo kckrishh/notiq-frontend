@@ -15,6 +15,7 @@ import {
   RefreshCcw,
   Trash2,
   RotateCcw,
+  Edit,
 } from 'lucide-angular';
 import { FormsModule } from '@angular/forms';
 
@@ -67,6 +68,7 @@ import { AlertNotificationComponent } from './shared/alert-notification/alert-no
       RefreshCcw,
       RotateCcw,
       Trash2,
+      Edit,
     }),
     FormsModule,
   ],
