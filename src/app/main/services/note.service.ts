@@ -17,6 +17,13 @@ export class NoteService {
     });
   }
 
+  editNote(id: any, editedNote: any) {
+    return this.http.put(`${this.baseUrl}/${id}`, editedNote, {
+      responseType: 'text',
+      withCredentials: true,
+    });
+  }
+
   getAllNotes() {
     return this.http.get(this.baseUrl, {
       withCredentials: true,

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NoteService } from '../../services/note.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { DataService } from '../../services/data.service';
+import { NoteActionService } from '../../services/note-action.service';
 
 @Component({
   selector: 'app-add-note',
@@ -25,8 +26,8 @@ import { DataService } from '../../services/data.service';
     ]),
   ],
 })
-export class AddNoteComponent {
-  note = {
+export class AddNoteComponent implements OnInit {
+  note: any = {
     title: '',
     content: '',
   };
@@ -37,16 +38,35 @@ export class AddNoteComponent {
   errorMessage: string = '';
   successMessage: string = '';
 
+  isPanelOpen = false;
+  iseditNoteMode = false;
+  editNodeId: any = null;
+
   constructor(
     private noteService: NoteService,
-    private dataService: DataService
+    private dataService: DataService,
+    private noteAction: NoteActionService
   ) {}
 
-  isPanelOpen = false;
+  ngOnInit() {
+    this.noteAction.editNote$.subscribe((note) => {
+      if (note) {
+        this.iseditNoteMode = true;
+        this.editNodeId = note.id;
+        this.note = {
+          title: note.title,
+          content: note.content,
+        };
+        this.openPanel();
+      }
+    });
+  }
 
   openPanel() {
     this.isPanelOpen = true;
-    this.resetForm();
+    if (!this.iseditNoteMode) {
+      this.resetForm();
+    }
     this.pannelOpen.emit();
   }
 
@@ -82,19 +102,36 @@ export class AddNoteComponent {
 
     this.loading = true;
 
-    this.noteService.createNote(this.note).subscribe({
-      next: (res) => {
-        this.successMessage = res;
-        this.loading = false;
-        this.dataService.triggerRefresh();
-        this.resetForm();
-        this.closePanel();
-      },
-      error: (err) => {
-        this.errorMessage =
-          err.error?.message || 'An error occurred. Please try again.';
-        this.loading = false;
-      },
-    });
+    if (this.iseditNoteMode && this.editNodeId) {
+      this.noteService.editNote(this.editNodeId, this.note).subscribe({
+        next: (res) => {
+          this.successMessage = res;
+          this.loading = false;
+          this.dataService.triggerRefresh();
+          this.resetForm();
+          this.closePanel();
+        },
+        error: (err) => {
+          this.errorMessage =
+            err.error?.message || 'An error occurred. Please try again.';
+          this.loading = false;
+        },
+      });
+    } else {
+      this.noteService.createNote(this.note).subscribe({
+        next: (res) => {
+          this.successMessage = res;
+          this.loading = false;
+          this.dataService.triggerRefresh();
+          this.resetForm();
+          this.closePanel();
+        },
+        error: (err) => {
+          this.errorMessage =
+            err.error?.message || 'An error occurred. Please try again.';
+          this.loading = false;
+        },
+      });
+    }
   }
 }

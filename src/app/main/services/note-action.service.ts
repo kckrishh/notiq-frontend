@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NoteService } from './note.service';
 import { MessageService } from './message.service';
 import { DataService } from './data.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -55,5 +56,13 @@ export class NoteActionService {
         this.message.showMessage('Sorry could not move to trash', 'error');
       },
     });
+  }
+
+  private _editNote = new BehaviorSubject<any>(null);
+
+  readonly editNote$ = this._editNote.asObservable();
+
+  triggerEdit(note: any) {
+    this._editNote.next(note);
   }
 }
