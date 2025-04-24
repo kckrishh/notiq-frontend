@@ -12,6 +12,7 @@ export const mainGuard: CanActivateFn = () => {
     http
       // .get('http://localhost:8080/auth/me', {
       .get('https://notiq-backend.onrender.com/auth/me', {
+        responseType: 'text',
         withCredentials: true,
       })
       .pipe(
